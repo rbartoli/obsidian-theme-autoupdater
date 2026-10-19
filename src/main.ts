@@ -1,6 +1,6 @@
 import { apiVersion, Notice, Plugin, requestUrl } from 'obsidian';
 import { ThemeAutoupdaterSettingTab } from './settings';
-import { checkAndUpdate, Data, Env, Event, Installed, Io, normaliseData, rollback } from './updater';
+import { checkAndUpdate, Data, Env, Event, Installed, installedThemes, Io, normaliseData, rollback } from './updater';
 
 export default class ThemeAutoupdater extends Plugin {
 	data: Data = { themes: {} };
@@ -36,6 +36,7 @@ export default class ThemeAutoupdater extends Plugin {
 		return this.serial(async () => {
 			try {
 				this.announce(await rollback(this.env(), this.data, name));
+				this.installed = await installedThemes(this.env());
 			} catch (err) {
 				console.error('Theme Autoupdater: rollback failed', err);
 				new Notice(`${name} could not be rolled back: ${err instanceof Error ? err.message : String(err)}`);
@@ -71,7 +72,7 @@ export default class ThemeAutoupdater extends Plugin {
 				new Notice(`${event.name} rolled back to ${event.to}. ${event.skipped} will be skipped.`, 8000);
 				return;
 			case 'edited':
-				new Notice(`${event.name} ${event.to} was not installed because theme.css was edited locally. Update it from Settings → Appearance when you are ready.`, 15000);
+				new Notice(`${event.name} ${event.to} was not installed: its theme.css does not match the published file, so it may have been edited locally. Update it from Settings → Appearance when you are ready.`, 15000);
 				return;
 			case 'available':
 				new Notice(`${event.name} ${event.to} is available. Install it from Settings → Appearance → Check for updates.`, 15000);

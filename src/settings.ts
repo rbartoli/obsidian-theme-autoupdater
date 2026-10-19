@@ -47,7 +47,7 @@ function describe(theme: Installed, state: ThemeState | undefined): string {
 		const when = new Date(state.updatedAt).toLocaleDateString();
 		parts.push(state.skip && !state.backup ? `rolled back ${when}, ${state.skip} skipped` : `updated ${when}`);
 	} else if (state?.hash === undefined && state?.unverified === theme.version) {
-		parts.push('edited locally, not updated automatically');
+		parts.push('does not match the published file, not updated automatically');
 	} else {
 		parts.push('not updated yet');
 	}

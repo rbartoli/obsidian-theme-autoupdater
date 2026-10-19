@@ -20,8 +20,8 @@ describe('update', () => {
 		const { io, data } = vault();
 		const e = env(io);
 		const { installed, events } = await checkAndUpdate(e, data);
-		expect(installed).toEqual([{ name: 'Tela', version: '1.1.0', dir: 'config/themes/Tela' }]);
 		expect(events).toEqual([{ type: 'updated', name: 'Tela', from: '1.1.0', to: '1.2.0' }]);
+		expect(installed).toEqual([{ name: 'Tela', version: '1.2.0', dir: 'config/themes/Tela' }]);
 		expect(io.theme('Tela')).toEqual({ css: NEW, version: '1.2.0' });
 		expect(io.files.get(`${BACKUP}/theme.css`)).toBe(OLD);
 		expect(JSON.parse(io.files.get(`${BACKUP}/manifest.json`) ?? '')).toMatchObject({ version: '1.1.0' });

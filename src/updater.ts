@@ -141,7 +141,8 @@ export async function checkAndUpdate(env: Env, data: Data): Promise<{ installed:
 			console.error(`Theme Autoupdater: ${theme.name}`, err);
 		}
 	}
-	return { installed, events };
+	// Re-read the folder when something was written, so the list reports what is installed now.
+	return { installed: events.some((e) => e.type === 'updated' || e.type === 'failed') ? await installedThemes(env) : installed, events };
 }
 
 // Drops records and backups of themes that are no longer installed.
