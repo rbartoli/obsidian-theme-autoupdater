@@ -1,0 +1,10 @@
+{
+	"id": "theme-autoupdater",
+	"name": "Theme Autoupdater",
+	"version": "1.0.0",
+	"minAppVersion": "1.13.0",
+	"description": "Keep installed community themes up to date in the background, with a backup before every update and one-click rollback.",
+	"author": "Riccardo Bartoli",
+	"authorUrl": "https://github.com/rbartoli",
+	"isDesktopOnly": false
+}
