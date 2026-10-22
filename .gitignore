@@ -6,3 +6,4 @@ data.json
 .idea
 .DS_Store
 .project-map
+.claude/worktrees/
