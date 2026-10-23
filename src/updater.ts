@@ -54,6 +54,8 @@ export interface ThemeState {
 	skip?: string;
 	/** A version already announced, so a notice shows once. */
 	notified?: string;
+	/** The version the last check would install, for the settings tab. */
+	latest?: string;
 }
 
 export interface Data {
@@ -168,6 +170,8 @@ async function checkTheme(env: Env, data: Data, theme: Installed, repo: string):
 		delete state.hash;
 		delete state.unverified;
 	}
+	if (latest) state.latest = latest;
+	else delete state.latest;
 	const update = latest && isNewer(theme.version, latest) && latest !== state.skip ? latest : null;
 
 	if (!env.reloadThemes) {

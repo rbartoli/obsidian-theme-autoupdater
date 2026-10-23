@@ -1,6 +1,6 @@
 {
 	"name": "theme-autoupdater",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Obsidian plugin that keeps installed community themes up to date in the background, with a backup before every update and one-click rollback.",
 	"main": "main.js",
 	"type": "module",

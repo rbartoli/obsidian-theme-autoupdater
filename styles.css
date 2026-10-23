@@ -1,4 +1,6 @@
+/* Notices sit on a dark background in both modes, where a theme's link colour can be unreadable. */
 .theme-autoupdater-action {
+	color: inherit;
 	cursor: pointer;
 	text-decoration: underline;
 }

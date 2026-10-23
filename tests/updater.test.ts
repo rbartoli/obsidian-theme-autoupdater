@@ -37,7 +37,7 @@ describe('update', () => {
 		const { events } = await checkAndUpdate(env(io), data);
 		expect(events).toEqual([]);
 		expect(io.writes).toEqual([]);
-		expect(data.themes.Tela).toMatchObject({ version: '1.2.0', hash: hash(NEW) });
+		expect(data.themes.Tela).toMatchObject({ version: '1.2.0', hash: hash(NEW), latest: '1.2.0' });
 	});
 
 	it('falls back to the default branch when the release has no assets', async () => {
