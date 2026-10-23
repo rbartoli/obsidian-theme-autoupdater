@@ -1,6 +1,6 @@
 import { App, PluginSettingTab, SettingDefinitionItem } from 'obsidian';
 import type ThemeAutoupdater from './main';
-import { Installed, ThemeState } from './updater';
+import { statusLine } from './status';
 import { isNewer } from './versions';
 
 export class ThemeAutoupdaterSettingTab extends PluginSettingTab {
@@ -27,7 +27,7 @@ export class ThemeAutoupdaterSettingTab extends PluginSettingTab {
 			const state = this.plugin.data.themes[theme.name];
 			items.push({
 				name: theme.name,
-				desc: describe(theme, state),
+				desc: statusLine(theme, state),
 				searchable: false,
 				render: (setting) => {
 					const backup = state?.backup;
@@ -47,17 +47,4 @@ export class ThemeAutoupdaterSettingTab extends PluginSettingTab {
 		}
 		return items;
 	}
-}
-
-function describe(theme: Installed, state: ThemeState | undefined): string {
-	const parts = [theme.version];
-	if (state?.updatedAt && state.version === theme.version) {
-		const when = new Date(state.updatedAt).toLocaleDateString();
-		parts.push(state.skip && !state.backup ? `rolled back ${when}, ${state.skip} skipped` : `updated ${when}`);
-	} else if (state?.hash === undefined && state?.unverified === theme.version) {
-		parts.push('does not match the published file, not updated automatically');
-	} else {
-		parts.push('not updated yet');
-	}
-	return parts.join(' · ');
 }

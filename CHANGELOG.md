@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 (2026-10-23)
+
+- The settings tab says what the last check found: "up to date", "1.2.0 available", or, for a theme that doesn't match its published file, which version was held back ("so 4.1.0 was not installed"). A current theme used to read "not updated yet", as if an update were waiting, and a theme not checked yet now says so.
+- The Roll back link in a notice takes the notice's text colour. Notices are dark in both modes, and a theme's light-mode link colour could be unreadable on them: Tela's measured 2.29:1.
+- The README opens with why the plugin exists, shows the notices and the settings tab, and has a section for theme authors. Each paragraph is one line, because the community directory renders every line break.
+- Checked: 31 unit tests, including the settings tab's status line in every state; a run on Obsidian 1.14.5 with Tela 1.1.1, Minimal 9.1.3, a locally edited Baseline 4.0.0 and a current Things 2.2.4: Tela and Minimal updated with a notice each, Baseline was held back with its notice, Things read "up to date", and after rolling Minimal back its row offered Install 9.1.4. The Roll back link measured the notice's text colour in dark and light mode.
+
 ## 1.0.0 (2026-10-23)
 
 First version, built on 2026-10-19 against Obsidian 1.14.4.
