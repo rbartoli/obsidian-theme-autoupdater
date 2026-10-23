@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 (unreleased)
+## 1.0.0 (2026-10-23)
 
 First version, built on 2026-10-19 against Obsidian 1.14.4.
 
