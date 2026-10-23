@@ -1,6 +1,7 @@
 import { App, PluginSettingTab, SettingDefinitionItem } from 'obsidian';
 import type ThemeAutoupdater from './main';
 import { Installed, ThemeState } from './updater';
+import { isNewer } from './versions';
 
 export class ThemeAutoupdaterSettingTab extends PluginSettingTab {
 	constructor(
@@ -30,10 +31,17 @@ export class ThemeAutoupdaterSettingTab extends PluginSettingTab {
 				searchable: false,
 				render: (setting) => {
 					const backup = state?.backup;
-					if (!backup) return;
-					setting.addButton((button) =>
-						button.setButtonText(`Roll back to ${backup.version}`).onClick(() => void this.plugin.rollback(theme.name)),
-					);
+					if (backup) {
+						setting.addButton((button) =>
+							button.setButtonText(`Roll back to ${backup.version}`).onClick(() => void this.plugin.rollback(theme.name)),
+						);
+					}
+					const skipped = state?.skip;
+					if (skipped && this.plugin.canInstall && state?.version === theme.version && isNewer(theme.version, skipped)) {
+						setting.addButton((button) =>
+							button.setButtonText(`Install ${skipped}`).onClick(() => void this.plugin.installSkipped(theme.name)),
+						);
+					}
 				},
 			});
 		}

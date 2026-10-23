@@ -13,8 +13,8 @@ something changed:
 > Tela updated to 1.2.0 · Roll back
 
 That is the whole interface, plus a settings tab listing your themes with the
-installed version, when it was last updated, and a **Roll back** button while a
-backup exists.
+installed version, when it was last updated, a **Roll back** button while a
+backup exists, and an **Install** button for a version you rolled back from.
 
 ## Safety
 
@@ -33,7 +33,8 @@ It writes to your vault unattended, so safety is the feature.
   on it is handled automatically.
 - **One-click rollback.** Rolling back restores the backup and marks the
   version it replaces as skipped, so the next start does not reinstall it.
-  The version after that installs normally.
+  The version after that installs normally, and **Install** in the settings tab
+  brings the skipped one back.
 - **Fails safe.** Obsidian's theme registry is not part of its public API. If
   the running Obsidian doesn't expose it in the expected shape, the plugin
   never writes: it only tells you when a theme has an update.

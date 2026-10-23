@@ -16,13 +16,14 @@ First version, built on 2026-10-19 against Obsidian 1.14.4.
   default branch when it is still at that version), with one notice per
   version.
 - One-click rollback from the notice or the settings tab; the version rolled
-  back from is skipped until a newer one appears.
+  back from is skipped until a newer one appears, or until **Install** in the
+  settings tab brings it back through the same checked update.
 - Notify-only when the running Obsidian does not expose its theme registry in
   the expected shape.
 - Settings tab built on the 1.13 setting definitions API, so `minAppVersion`
   is 1.13.0.
 
-Verified: 26 unit tests over an in-memory vault; a real run on Obsidian 1.14.4
+Verified: 27 unit tests over an in-memory vault; a real run on Obsidian 1.14.4
 (Windows) with a throwaway vault holding Minimal 9.1.1, Tela 1.0.0 and a
 locally edited Things 2.2.3. Minimal and Tela updated at startup with backups
 written first, the active theme reloaded without a restart, Things was skipped

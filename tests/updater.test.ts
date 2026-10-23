@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { hash } from '../src/hash';
-import { checkAndUpdate, Data, rollback } from '../src/updater';
+import { checkAndUpdate, Data, rollback, unskip } from '../src/updater';
 import { DIRECTORY, env, FakeIo } from './fake';
 
 const OLD = 'body { color: red; }';
@@ -201,6 +201,19 @@ describe('rollback', () => {
 		const next = await checkAndUpdate(e, data);
 		expect(next.events).toEqual([{ type: 'updated', name: 'Tela', from: '1.1.0', to: '1.2.1' }]);
 		expect(io.theme('Tela')).toEqual({ css: 'v2.1', version: '1.2.1' });
+	});
+
+	it('installs the skipped version once the skip is lifted', async () => {
+		const { io, data } = vault();
+		const e = env(io);
+		await checkAndUpdate(e, data);
+		await rollback(e, data, 'Tela');
+		unskip(data, 'Tela');
+		const again = await checkAndUpdate(e, data);
+		expect(again.events).toEqual([{ type: 'updated', name: 'Tela', from: '1.1.0', to: '1.2.0' }]);
+		expect(io.theme('Tela')).toEqual({ css: NEW, version: '1.2.0' });
+		expect(data.themes.Tela?.skip).toBeUndefined();
+		expect(data.themes.Tela?.backup).toMatchObject({ version: '1.1.0', hash: hash(OLD) });
 	});
 
 	it('refuses without a backup or with a backup that does not match its record', async () => {

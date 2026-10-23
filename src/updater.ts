@@ -290,3 +290,11 @@ export async function rollback(env: Env, data: Data, name: string): Promise<Even
 	await env.reloadThemes();
 	return { type: 'rolled-back', name, to: backup.version, skipped };
 }
+
+// Lifts a rollback's skip, so the next check installs that version again.
+export function unskip(data: Data, name: string): void {
+	const state = data.themes[name];
+	if (!state) return;
+	delete state.skip;
+	delete state.notified;
+}

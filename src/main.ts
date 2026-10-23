@@ -1,6 +1,6 @@
 import { apiVersion, Notice, Plugin, requestUrl } from 'obsidian';
 import { ThemeAutoupdaterSettingTab } from './settings';
-import { checkAndUpdate, Data, Env, Event, Installed, installedThemes, Io, normaliseData, rollback } from './updater';
+import { checkAndUpdate, Data, Env, Event, Installed, installedThemes, Io, normaliseData, rollback, unskip } from './updater';
 
 export default class ThemeAutoupdater extends Plugin {
 	data: Data = { themes: {} };
@@ -46,6 +46,11 @@ export default class ThemeAutoupdater extends Plugin {
 		});
 	}
 
+	/** Installs the version a rollback skipped, through the usual checked update. */
+	installSkipped(name: string): Promise<void> {
+		return this.serial(async () => unskip(this.data, name)).then(() => this.checkForUpdates());
+	}
+
 	// Runs are serialised so a rollback never overlaps the startup check.
 	private serial(task: () => Promise<void>): Promise<void> {
 		const run = this.queue.then(task, task);
@@ -69,7 +74,7 @@ export default class ThemeAutoupdater extends Plugin {
 				return;
 			}
 			case 'rolled-back':
-				new Notice(`${event.name} rolled back to ${event.to}. ${event.skipped} will be skipped.`, 8000);
+				new Notice(`${event.name} rolled back to ${event.to}. ${event.skipped} will be skipped; you can install it again from Theme Autoupdater's settings.`, 8000);
 				return;
 			case 'edited':
 				new Notice(`${event.name} ${event.to} was not installed: its theme.css does not match the published file, so it may have been edited locally. Update it from Settings → Appearance when you are ready.`, 15000);
